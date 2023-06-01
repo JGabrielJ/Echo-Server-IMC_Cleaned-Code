@@ -1,197 +1,202 @@
 class App():
     def __init__(self):
-        App.title("The shape of us!")
-        print()
-        print("=> Informe alguns dados para começar: ")
-        print()
-        App.generateHeader()
+        App.title('The shape of us!')
+        print('\n=> Informe alguns dados para começar:\n')
+        App.generate_header()
 
     @classmethod
-    def padding(cls):
-        print()
-        print()
+    def padding(self):
+        print('\n')
 
     @classmethod
-    def generateHeader(cls):
-        print("OBS: O Nivel de atividade varia de 1 (Sedentário) a 4 (Muito Ativo) !")
-        print("Ex: {:^8s} {:^22s} {:^14s} {:^20s} {:^10s} ".format("1.70", "70.0", "M", "3", "20"))
-        print()
+    def generate_header(self):
+        print('OBS: O Nível de Atividade varia de 1 (Sedentário) a 4 (Muito Ativo).')
+        print(f'Ex: {"1.70":^8s} {"70.0":^22s} {"M":^14s} {"3":^20s} {"20":^10s}\n')
 
     @classmethod
-    def row(cls):
+    def row(self):
         print('*' * 81)
 
     @classmethod
-    def rowTable(cls):
-        print(f"+{'-' * 25}++{'-' * 25}++{'-' * 25}+")
+    def row_table(self):
+        print(f'+{"-" * 25}++{"-" * 25}++{"-" * 25}+')
 
     @classmethod
-    def title(cls, title):
+    def title(self, title: str):
         App.row()
-        print('*{:^79s}*'.format(title))
+        print(f'*{title:^79s}*')
         App.row()
 
     @classmethod
-    def collectUserData(cls):
-        print("{:^16s}".format("Altura (m):"), end="")
-        print("{:^18s}".format("Peso (Kg):"), end="")
-        print("{:^18s}".format("Sexo (M/F):"), end="")
-        print("{:^18s}".format("Nvl de Ativ:"), end="")
-        print("{:^16s}".format("Idade :"))
+    def collect_user_data(self) -> list:
+        print(f'{"Altura (m):":^16s}', end='')
+        print(f'{"Peso (kg):":^18s}', end='')
+        print(f'{"Sexo (M/F):":^18s}', end='')
+        print(f'{"Nível de Atividade:":^18s}', end='')
+        print(f'{"Idade:":^16s}', end='')
 
-        userData = input("")
-        userData = userData.split(" ")
+        user_data = input('')
+        user_data = user_data.split(' ')
         print()
         App.row()
 
-        return userData
+        return user_data
 
     @classmethod
-    def listUserData(cls, values):
+    def list_user_data(self, values: list) -> list:
         list = []
         for i in values:
-            if i != "":
-                if (i in "Mm" or i in "Ff"):
+            if i != '':
+                if i in 'Mm' or i in 'Ff':
                     list.append(i)
                 else:
                     list.append(float(i))
         return list
 
     @classmethod
-    def validateData(cls, values):
+    def validate_data(self, values: list) -> list:
         while True:
             try:
-                list = App.listUserData(values)
-                userData = App.generateDict(list)
+                list = App.list_user_data(values)
+                user_data = App.generate_dict(list)
 
             except IndexError:
-                print()
-                print('Preencha todos os dados para prosseguir!'.upper())
-                print()
-                App.generateHeader()
-                values = App.collectUserData()
+                print('\nPreencha todos os dados para prosseguir!\n'.upper())
+                App.generate_header()
+                values = App.collect_user_data()
 
             except ValueError:
-                print()
-                print('Valor inválido!'.upper())
-                print()
-                App.generateHeader()
-                values = App.collectUserData()
+                print('\nValor inválido!\n'.upper())
+                App.generate_header()
+                values = App.collect_user_data()
 
             else:
-                list = App.listUserData(values)
+                list = App.list_user_data(values)
                 break
 
         return list
 
     @classmethod
-    def generateDict(cls, list):
-        dic = {'altura': None, 'peso': None, 'sexo': None, 'nvlAtiv': None, 'idade': None}
+    def generate_dict(self, list: list) -> dict:
+        dic = {
+            'altura': float,
+            'peso': float,
+            'sexo': str,
+            'nvl_ativ': float,
+            'idade': float
+        }
+
         cont = 0
-        for k, v in dic.items():
+        for k in dic.keys():
             dic[k] = list[cont]
             cont += 1
 
         return dic
 
     @classmethod
-    def printresult(cls, list):
+    def print_result(self, list: list):
         print()
         App.row()
-        print('|{:^25s}||{:^25s}||{:^25s}|'.format(str(list[0][0]), str(list[0][1]),
-                                                   str(list[0][2])))
+        print(f'|{str(list[0][0]):^25s}||{str(list[0][1]):^25s}||{str(list[0][2]):^25s}|')
         App.row()
 
     @classmethod
     # (imc, status)
-    def creatTableImc(cls, imc, status):
-        content = [['Tabela de IMC', 'Intervalo', ' Status'],
-                   ['Menos do que: ', '18,5', 'Abaixo do Peso !'],
-                   ['Entre: ', '18,5 e 24,9', 'Peso Normal!'],
-                   ['Entre: ', '25,0 e 29,9', 'Sobrepeso!'],
-                   ['Entre: ', '30,0 e 34,9', 'Obesidade Grau 1!'],
-                   ['Entre: ', '35,0 e 39,9', 'Obesidade Grau 2!'],
-                   ['Mais do que: ', '40,0', 'Obesidade Grau 3!'],
-                   ]
+    def creat_table_imc(self, imc: float, status: str):
+        content = [
+            ['Tabela de IMC', 'Intervalo', ' Status'],
+            ['Menos do que: ', '18,5', 'Abaixo do Peso'],
+            ['Entre: ', '18,5 e 24,9', 'Peso Normal'],
+            ['Entre: ', '25,0 e 29,9', 'Sobrepeso'],
+            ['Entre: ', '30,0 e 34,9', 'Obesidade Grau 1'],
+            ['Entre: ', '35,0 e 39,9', 'Obesidade Grau 2'],
+            ['Mais do que: ', '40,0', 'Obesidade Grau 3'],
+        ]
 
-        # analysingImc -> status
+        # analysingIMC -> status
         result = [['SEU IMC: ', str(imc), status]]
         print()
         for row in range(0, len(content)):
-            App.rowTable()
-            print('|{:^25s}||{:^25s}||{:^25s}|'.format(content[row][0], content[row][1],
-                                                       content[row][2]))
+            App.row_table()
+            print(f'|{content[row][0]:^25s}||{content[row][1]:^25s}||{content[row][2]:^25s}|')
             if row == 6:
-                App.rowTable()
-                App.printresult(result)
+                App.row_table()
+                App.print_result(result)
 
     @classmethod
-    def creatTableQtdCal(cls, dict):
+    def creat_table_qntd_cal(self, dict: dict):
         content = [
-            ["Carboidratos: ", dict["carboidratos"], round(float((dict["carboidratos"])) / 4.0, 2)],
-            ["Proteínas: ", dict["proteinas"], round(float((dict["proteinas"])) / 4.0, 2)],
-            ["Gorduras", dict["gorduras"], round(float((dict["gorduras"])) / 9.0, 2)]
+            ['Carboidratos: ', dict['carboidratos'], round(float(dict['carboidratos']) / 4.0, 2)],
+            ['Proteínas: ', dict['proteinas'], round(float(dict['proteinas']) / 4.0, 2)],
+            ['Gorduras: ', dict['gorduras'], round(float(dict['gorduras']) / 9.0, 2)]
         ]
 
         for row in range(0, len(content)):
-            App.rowTable()
-            print('|{:^25}||{:^25}||{:^25}|'.format(str(content[row][0]), str(content[row][1]) + " kcal",
-                                                    str(content[row][2]) + " g"))
-            App.rowTable()
+            App.row_table()
+            print(f'|{str(content[row][0]):^25}||{str(content[row][1]) + " kcal":^25}||{str(content[row][2]) + " g":^25}|')
+            App.row_table()
+    
+    @classmethod
+    def imc_option(self, response: dict):
+        App.title('Índice de Massa Corporal (IMC)')
+
+        print(f'\n{"O Índice de Massa Corporal (IMC) é um parâmetro":^81s}')
+        print(f'{"utilizado para saber se o peso está de acordo com a altura de um":^81s}')
+        print(f'{"indivíduo, o que pode interferir diretamente na sua saúde e qualidade de vida.":^81s}')
+
+        App.creat_table_imc(response['imc'], response['status_imc'])
 
     @classmethod
-    def menu(cls, response):
+    def tmb_option(self, response: dict):
+        App.title('Taxa Metabólica Basal (TMB)')
+
+        print(f'\n{"A Taxa de Metabolismo Basal (TMB) é a quantidade":^81s}')
+        print(f'{"mínima de energia (calorias) necessária para manter as":^81s}')
+        print(f'{"funções vitais do organismo em repouso. Essa taxa pode variar":^81s}')
+        print(f'{"de acordo com o sexo, peso, altura, idade e nível de atividade física.":^81s}')
+
+        result = [['RESULTADO:', 'SUA TMB:', str(response['tmb']) + ' kcal']]
+        App.print_result(result)
+
+    @classmethod
+    def qntd_cal_option(self, response: dict):
+        nut = response['nutrientes']
+        App.title('Quantidade de Calorias')
+
+        print(f'\n{"Calorias são a quantidade de energia que um determinado alimento":^81s}')
+        print(f'{"fornece após ser consumido, contribuindo para as funções essenciais do":^81s}')
+        print(f'{"organismo, como respiração, produção de hormônios, e funcionamento do cérebro.":^81s}')
+        print(f'\n{"Você deve consumir aproximadamente: ":^81s}\n')
+
+        App.creat_table_qntd_cal(nut)
+        result = [['RESULTADO:', 'SUA QNTD DE KCAL:', str(response['cal']) + ' kcal']]
+        App.print_result(result)
+
+    @classmethod
+    def exit_to_app(self):
+        print(f'{"Obrigado por usar nosso App!":^79s}')
+        App.padding()
+        App.row()
+
+    @classmethod
+    def menu(self, response: dict):
         while True:
             App.padding()
-            print("=> Selecione uma opção: ")
-            print()
-            print('{:^16s}{:^18s}{:^18s}{:^18s}{:2s}'.format("1 - IMC", "2 - TMB", "3 -  QTD KCAL", "4 - SAIR", ""),
-                  end="\t")
-            opt = input()
+
+            print("=> Selecione uma opção:\n")
+            print(f'{"1 - IMC":^16s}{"2 - TMB":^18s}{"3 -  QNTD KCAL":^18s}{"4 - SAIR":^18s}{"":2s}', end="\t")
+            option = input()
+
             App.padding()
 
-            if opt == "1":
-                App.title("IMC")
-                print()
-                print("{:^81s}".format("O Indice de Massa Corporal (IMC) é um parâmetro"))
-                print("{:^81s}".format("utilizado para saber se o peso está de acordo com a altura de um"))
-                print(
-                    "{:^81s}".format("indivíduo, o que pode interferir diretamente na sua saúde e qualidade de vida!"))
-                App.creatTableImc(response["imc"], response["statusImc"])
-
-            elif opt == "2":
-                App.title("Taxa Metabólica Basal: ")
-                print()
-                print("{:^81s}".format("A Taxa de Metabolismo Basal (TMB) é a quantidade"))
-                print("{:^81s}".format("mínima de energia (calorias) necessária para manter as"))
-                print("{:^81s}".format("funções vitais do organismo em repouso. Essa taxa pode variar"))
-                print("{:^81s}".format("de acordo com o sexo, peso, altura, idade e nível de atividade física."))
-
-                result = [['RESULTADO :', 'SUA TMB:', str(response['tmb']) + " kcal"]]
-                App.printresult(result)
-
-            elif opt == "3":
-                nut = response["nutrientes"]
-                App.title("Quantidade de Calorias: ")
-                print()
-                print("{:^81s}".format("Calorias são a quantidade de energia que um determinado alimento"))
-                print("{:^81s}".format("fornece após ser consumido, contribuindo para as funções essenciais do"))
-                print(
-                    "{:^81s}".format("organismo, como respiração, produção de hormônios, e funcionamento do cérebro."))
-
-                print()
-                print("{:^81s}".format("Você deve consumir aproximadamente: "))
-                print()
-                App.creatTableQtdCal(nut)
-
-                result = [['RESULTADO :', 'SUA QTD DE KCAL:', str(response['cal']) + " kcal"]]
-                App.printresult(result)
-
-            elif opt == "4":
-                print('{:^79s}'.format("Obrigado por usar nosso App !"))
-                App.padding()
-                App.row()
+            if option == '1':
+                App.imc_option(response)
+            elif option == '2':
+                App.tmb_option(response)
+            elif option == '3':
+                App.qntd_cal_option(response)
+            elif option == '4':
+                App.exit_to_app()
                 break
-
             else:
-                print("Erro: Opção Inválida!")
+                print('Erro: Opção Inválida!')
