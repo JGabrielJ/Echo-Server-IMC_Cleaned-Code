@@ -7,9 +7,8 @@ class App():
     """
 
     def __init__(self):
-        """ Initializes the instance by generating a title
-        for the application and collecting some data from the client.
-        """
+        """Initializes the instance by generating a title
+        for the application and collecting some data from the client."""
 
         App.title('The shape of us!')
         print('\n=> Informe alguns dados para começar:\n')
@@ -17,29 +16,29 @@ class App():
 
     @classmethod
     def padding(self):
-        """ Generates a padding of two spaces
-        between one line and another. """
+        """Generates a padding of two spaces
+        between one line and another."""
 
         print('\n')
 
     @classmethod
     def generate_header(self):
-        """ Generates a header informing how the data
-        must be provided by the client. """
+        """Generates a header informing how the data
+        must be provided by the client."""
 
         print('OBS: O Nível de Atividade varia de 1 (Sedentário) a 4 (Muito Ativo).')
         print(f'Ex: {"1.70":^8s} {"70.0":^22s} {"M":^14s} {"3":^20s} {"20":^10s}\n')
 
     @classmethod
     def row(self):
-        """ Generates a line with 81 asterisks (*). """
+        """Generates a line with 81 asterisks (*)."""
 
         print('*' * 81)
 
     @classmethod
     def row_table(self):
-        """ Generates a table row interspersing
-        1 or 2 plus sign(s) (+) and 25 dashes (-). """
+        """Generates a table row interspersing
+        1 or 2 plus sign(s) (+) and 25 dashes (-)."""
 
         print(f'+{"-" * 25}++{"-" * 25}++{"-" * 25}+')
 
@@ -60,7 +59,9 @@ class App():
         """Collects five client's data: height, weight, gender, activity level and age.
 
         Returns:
-            A list containing the data provided by the client.
+            A list containing the data provided by the client. For example:
+
+            user_data = ['1.70', '70.0', 'M', '3', '20']
         """
 
         print(f'{"Altura (m):":^16s}', end='')
@@ -84,7 +85,10 @@ class App():
             values: A list containing the data provided by the client.
 
         Returns:
-            A list containing the client's data already converted to a float (except gender, which is a string).
+            A list containing the client's data already converted to a float
+            (except gender, which is a string). For example:
+
+            user_data = [1.7, 70.0, 'M', 3.0, 20.0]
         """
 
         list = []
@@ -104,7 +108,10 @@ class App():
             values: A list containing the data provided by the client.
 
         Returns:
-            A list containing the client's data, after it has been checked, corrected (if necessary) and approved.
+            A list containing the client's data, after it has been
+            checked, corrected (if necessary) and approved. For example:
+
+            user_data = [1.7, 70.0, 'M', 3.0, 20.0]
         """
 
         while True:
@@ -136,7 +143,10 @@ class App():
             list: A list containing the data provided by the client.
 
         Returns:
-            A dict containing client's data, organized so that each one belongs to its own key.
+            A dict containing client's data, organized so that
+            each one belongs to its own key. For example:
+
+            dic = {'altura': 1.7, 'peso': 70.0, 'sexo': 'M', 'nvl_ativ': 3.0, 'idade': 20.0}
         """
 
         dic = {
@@ -219,6 +229,15 @@ class App():
 
     @classmethod
     def imc_option(self, response: dict):
+        """Generates a header, with a title and short description,
+        and a table containing the BMI (IMC) ranges and their respective weight status,
+        along with the client's BMI (IMC) and weight status.
+
+        Args:
+            response: A dict containing the data processed by the server
+            from what was provided by the client.
+        """
+
         App.title('Índice de Massa Corporal (IMC)')
 
         print(f'\n{"O Índice de Massa Corporal (IMC) é um parâmetro":^81s}')
@@ -229,6 +248,14 @@ class App():
 
     @classmethod
     def tmb_option(self, response: dict):
+        """Generates a header, with a title and a brief description,
+        and a small table containing the client's Basal Metabolic Rate (BMR or TMB).
+
+        Args:
+            response: A dict containing the data processed by the server
+            from what was provided by the client.
+        """
+
         App.title('Taxa Metabólica Basal (TMB)')
 
         print(f'\n{"A Taxa de Metabolismo Basal (TMB) é a quantidade":^81s}')
@@ -241,6 +268,15 @@ class App():
 
     @classmethod
     def qntd_cal_option(self, response: dict):
+        """Generates a header, with title and brief description,
+        and a table containing the necessary amount of carbohydrates, proteins and fats
+        for a healthy consumption, in addition to an estimated amount of calories for the client.
+
+        Args:
+            response: A dict containing the data processed by the server
+            from what was provided by the client.
+        """
+
         nut = response['nutrientes']
         App.title('Quantidade de Calorias')
 
@@ -255,12 +291,23 @@ class App():
 
     @classmethod
     def exit_to_app(self):
+        """Generates a small footer with a thank you for using the App,
+        indicating the closure of the program."""
+
         print(f'{"Obrigado por usar nosso App!":^79s}')
         App.padding()
         App.row()
 
     @classmethod
     def menu(self, response: dict):
+        """Generates a menu with four options that asks
+        the client to choose to proceed with the program.
+
+        Args:
+            response: A dict containing the data processed by the server
+            from what was provided by the client.
+        """
+
         while True:
             App.padding()
 

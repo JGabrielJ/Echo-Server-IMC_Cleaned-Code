@@ -19,7 +19,14 @@ client_socket.connect((host, port))
 client_app = App()
 
 # collecting user data
-values = client_app.collect_user_data()
+while True:
+    try:
+        values = client_app.collect_user_data()
+    except KeyboardInterrupt:
+        print('\n\nValor inválido!\n'.upper())
+        App.generate_header()
+    else:
+        break
 
 # processing user data
 list_data = client_app.validate_data(values)
@@ -41,7 +48,14 @@ response = client_socket.recv(1024).decode()
 response = json.loads(response)
 
 # instantiate the menu
-client_app.menu(response)
+while True:
+    try:
+        client_app.menu(response)
+    except KeyboardInterrupt:
+        App.padding()
+        print('\nErro: Opção Inválida!')
+    else:
+        break
 
 # close connection
 client_socket.close()
